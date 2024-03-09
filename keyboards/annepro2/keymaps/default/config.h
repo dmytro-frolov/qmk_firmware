@@ -4,3 +4,4 @@
 
 
 #define RGBLIGHT_SLEEP 
+#define USB_SUSPEND_WAKEUP_DELAY 5000

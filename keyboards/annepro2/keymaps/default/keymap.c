@@ -138,9 +138,11 @@ layer_state_t layer_state_set_user(layer_state_t layer) {
             // Set the leds to pink
             ap2_led_set_foreground_color(0xf5, 0x42, 0x93);
             break;
-        default:
+        case _BASE_LAYER:
             // Reset back to the cu097 rrent profil
             ap2_led_reset_foreground_color();
+            break;
+        default:
             break;
     }
     return layer;
