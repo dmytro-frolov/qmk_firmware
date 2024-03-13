@@ -57,7 +57,7 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     * |-----------------------------------------------------------------------------------------+
     * | CAPS     |HOME |_ |END|  f  |  g  |  h  |  LEFT  |  k  |  l  | PGUP| PGDN |    Enter    |
     * |-----------------------------------------------------------------------------------------+
-    * | Shift      | _ | _ | UP |  DOWN  |  b  |  n  | MUTE |VOL_DOWN| VOL_UP | Brig_down |   BR_UP |
+    * | Shift      | _ | _ | DOWN |  UP  |  b  |  n  | MUTE |VOL_DOWN| VOL_UP | Brig_down |   BR_UP |
     * |-----------------------------------------------------------------------------------------+
     * | Ctrl  |  L1   |  Alt  |               PAUSE             |  FN1  |  NEXT  |  PREV  | Ctrl  |
     * \-----------------------------------------------------------------------------------------/
@@ -67,7 +67,7 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_EJCT, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_DEL,
         KC_TRNS, UC(0x30C4), KC_TRNS, KC_END, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_RIGHT, KC_HOME, KC_END, KC_TRNS,
         KC_CAPS_LOCK, KC_HOME, KC_TRNS, KC_END, KC_TRNS, KC_TRNS, KC_TRNS, KC_LEFT, KC_TRNS, KC_TRNS, KC_PGUP, KC_PGDN, KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_UP, KC_DOWN, KC_TRNS, KC_TRNS, KC_MUTE, KC_VOLD, KC_VOLU, KC_BRIGHTNESS_DOWN, KC_BRIGHTNESS_UP,
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_DOWN, KC_UP, KC_TRNS, KC_TRNS, KC_MUTE, KC_VOLD, KC_VOLU, KC_BRIGHTNESS_DOWN, KC_BRIGHTNESS_UP,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_MEDIA_PLAY_PAUSE, KC_TRNS, KC_MEDIA_NEXT_TRACK, KC_MEDIA_PREV_TRACK, KC_TRNS
     ),
     /*
