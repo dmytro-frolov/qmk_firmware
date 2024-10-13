@@ -4,13 +4,31 @@
 #include "config.h"
 #include QMK_KEYBOARD_H
 
+
 //#include "sendstring_colemak.h"
 enum anne_pro_layers {
     _BASE_LAYER,
+    _WIN_LAYER,  // New Windows layer
     _FN1_LAYER,
     _FN2_LAYER,
 };
 
+
+enum tap_codes{
+    TD_ESC_TILDE = 0,
+};
+
+void dance_esc_tilde(tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        tap_code(KC_GRV);  // Tap tilde (`~`)
+    } else {
+        tap_code(KC_ESC);  // Hold Escape
+    }
+}
+
+tap_dance_action_t tap_dance_actions[] = {
+    [TD_ESC_TILDE] = ACTION_TAP_DANCE_FN(dance_esc_tilde),
+};
 
 
 // Key symbols are based on QMK. Use them to remap your keyboard
@@ -26,7 +44,7 @@ enum anne_pro_layers {
 * | Shift      |  z  |  x  |  c  |  v  |  b  |  n  |  m  |  ,  |  .  |  /  |    Shift       |
 * |-----------------------------------------------------------------------------------------+
 * | Ctrl  |  WIN   |  ALT  |               space             |  FN1  |  <-  |  v  | ->  |
-* \------------------------------------------------------------oeu---------------------------/
+* \-----------------------------------------------------------------------------------------/
 * Layer TAP in _BASE_LAYER
 * ,-----------------------------------------------------------------------------------------.
 * |     |     |     |     |     |     |     |     |     |     |     |     |     |           |
@@ -48,6 +66,33 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, RSFT_T(KC_UP),
         KC_LCTL, KC_LGUI, KC_LALT , KC_SPC, MO(_FN1_LAYER), LT(_FN2_LAYER, KC_LEFT), KC_DOWN, KC_RGHT
     ),
+
+
+
+    /* Layer _WIN_LAYER
+    * ,-----------------------------------------------------------------------------------------.
+    * |   ` |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  0  |  -  |  =  |    Bksp   |
+    * |-----------------------------------------------------------------------------------------+
+    * | Tab    |  q  |  w  |  e  |  r  |  t  |  y  |  u  |  i  |  o  |  p  |  [  |  ]  |   \    |
+    * |-----------------------------------------------------------------------------------------+
+    * | ESC    |  a  |  s  |  d  |  f  |  g  |  h  |  j  |  k  |  l  |  ;  |  '  |    Enter    |
+    * |-----------------------------------------------------------------------------------------+
+    * | Shift      |  z  |  x  |  c  |  v  |  b  |  n  |  m  |  ,  |  .  |  /  |    Shift       |
+    * |-----------------------------------------------------------------------------------------+
+    * | Ctrl  |  WIN   |  ALT  |               space             |  FN1  |  <-  |  v  | ->  |
+    * \---------------------------------------------------------------------------------------*/
+
+
+
+    [_WIN_LAYER] = LAYOUT_60_ansi( /* Base */
+        TD(TD_ESC_TILDE), KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_EQL, KC_BSPC,
+        KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_LBRC, KC_RBRC, KC_BSLS,
+        KC_LCTL, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, KC_ENT,
+        KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, RSFT_T(KC_UP),
+        KC_LCTL, KC_LGUI, KC_LALT , KC_SPC, MO(_FN1_LAYER), LT(_FN2_LAYER, KC_LEFT), KC_DOWN, KC_RGHT
+    ),
+
+
     /*
     * Layer _FN1_LAYER
     * ,-----------------------------------------------------------------------------------------.
@@ -77,19 +122,19 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     * |-----------------------------------------------------------------------------------------+
     * | Tab    |  q  | UP  |  e  |  r  |  t  |  y  |  u  |  i  |  o  | PS | HOME | END |   \    |
     * |-----------------------------------------------------------------------------------------+
-    * | Esc     |LEFT |DOWN |RIGHT|  f  |  g  |  h  |  j  |  k  |  l  | PGUP|PGDN |    Enter    |
+    * | Esc     |LEFT |DOWN |RIGHT|  f  |  g  |  Bksp  |  j  |  k  |  l  | PGUP|PGDN |    Enter    |
     * |-----------------------------------------------------------------------------------------+
     * | Shift      |  z  |  x  |  c  |  v  |  b  |  n  |  m  |  ,  |INSRT| DEL |    Shift       |
     * |-----------------------------------------------------------------------------------------+
-    * | Ctrl  |  L1   |  Alt  |               space             |  Alt  |  FN1  |  FN2  | Ctrl  |
+    * | Ctrl  |  WIN_LAYER   |  BASE_LAYER  |               space             |  Alt  |  FN1  |  FN2  | Ctrl  |
     * \-----------------------------------------------------------------------------------------/
     */
     [_FN2_LAYER] = LAYOUT_60_ansi( /* Base */
         KC_TRNS, KC_AP2_BT1, KC_AP2_BT2, KC_AP2_BT3, KC_AP2_BT4, KC_TRNS, KC_TRNS, KC_TRNS, KC_AP_LED_OFF, KC_AP_LED_ON, KC_AP_LED_NEXT_INTENSITY, KC_AP_LED_SPEED, KC_TRNS, KC_TRNS,
-        MO(_FN2_LAYER), KC_TRNS, KC_UP, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PSCR, KC_HOME, KC_END, KC_TRNS,
-        KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PGUP, KC_PGDN, KC_TRNS,
+        KC_TRNS, KC_TRNS, KC_UP, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_PSCR, KC_HOME, KC_END, KC_TRNS,
+        KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, KC_TRNS, KC_TRNS, KC_PGUP, KC_PGDN, KC_TRNS,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_INS, KC_DEL, KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, MO(_FN1_LAYER), MO(_FN2_LAYER), KC_TRNS
+        KC_TRNS, DF(_WIN_LAYER), DF(_BASE_LAYER), KC_TRNS, KC_TRNS, MO(_FN1_LAYER), MO(_FN2_LAYER), KC_TRNS
     ),
 };
 const uint16_t keymaps_size = sizeof(keymaps);
@@ -130,6 +175,11 @@ void keyboard_post_init_user(void) {
 
 layer_state_t layer_state_set_user(layer_state_t layer) {
     switch(get_highest_layer(layer)) {
+        // case _WIN_LAYER:  // doesnt work for some reason
+        //     // ap2_led_set_profile(3);
+        //     // ap2_led_reset_foreground_color();
+        //     ap2_led_set_foreground_color(0xFF, 0x00, 0x00);
+        //     break;
         case _FN1_LAYER:
             // Set the leds to orange
             ap2_led_set_foreground_color(0xFF, 0x74, 0x00);
